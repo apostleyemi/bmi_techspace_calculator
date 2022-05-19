@@ -2,11 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'card_content.dart';
 import 'icon_content.dart';
-
-const bottomConstainerHeight = 80.0;
-const Color activeCardColor = Color(0xFF1D1E33);
-const Color inactiveCardColor = Color(0xFF111328);
-const buttomContainerColor = Color(0xFFEB1555);
+import 'constants.dart';
 
 class InputPage extends StatefulWidget {
   @override
@@ -21,6 +17,8 @@ enum GenderEnum {
 
 class _InputPageState extends State<InputPage> {
   GenderEnum SelectedGender = GenderEnum.empty;
+  int height = 180;
+  String rating = '180';
   // Color maleCardColor = inactiveCardColor;
   // Color femaleCardColor = inactiveCardColor;
   //
@@ -52,6 +50,7 @@ class _InputPageState extends State<InputPage> {
         title: Text('BMI CALCULATOR'),
       ),
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
             child: Row(
@@ -59,8 +58,8 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReUsableCard(
                     colorName: SelectedGender == GenderEnum.male
-                        ? activeCardColor
-                        : inactiveCardColor,
+                        ? kActiveCardColor
+                        : KInactiveCardColor,
                     cardChild: ReUsableIconContent(
                       onPress: () {
                         setState(() {
@@ -75,8 +74,8 @@ class _InputPageState extends State<InputPage> {
                 Expanded(
                   child: ReUsableCard(
                     colorName: SelectedGender == GenderEnum.female
-                        ? activeCardColor
-                        : inactiveCardColor,
+                        ? kActiveCardColor
+                        : KInactiveCardColor,
                     cardChild: ReUsableIconContent(
                       onPress: () {
                         setState(() {
@@ -93,7 +92,58 @@ class _InputPageState extends State<InputPage> {
           ),
           Expanded(
             child: ReUsableCard(
-              colorName: activeCardColor,
+              colorName: kActiveCardColor,
+              cardChild: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Height',
+                    style: kLabelTextStyle,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.baseline,
+                    textBaseline: TextBaseline.alphabetic,
+                    children: <Widget>[
+                      Text(
+                        height.toString(),
+                        style: KNumberTextStyle,
+                      ),
+                      Text(
+                        'cm',
+                        style: kLabelTextStyle,
+                      )
+                    ],
+                  ),
+                  SliderTheme(
+                    data: SliderTheme.of(context).copyWith(
+                        thumbColor: Color(0xFFEB1555),
+                        activeTrackColor: Colors.white,
+                        inactiveTrackColor: Color(0xFF8D8E98),
+                        thumbShape:
+                            RoundSliderThumbShape(enabledThumbRadius: 15.0),
+                        overlayShape:
+                            RoundSliderOverlayShape(overlayRadius: 30.0),
+                        overlayColor: Color(0x29EB1555)),
+                    child: Slider(
+                        value: height.toDouble(),
+                        min: 120.0,
+                        max: 220,
+                        // divisions: 4,
+                        label: rating,
+                        // activeColor: Color(0xFFEB1555),
+                        // inactiveColor: Color(0xFF8D8E98),
+                        onChanged: (double newValue) {
+                          setState(() {
+                            height = newValue.round();
+                            rating = newValue.toString();
+                            //height=newValue.toInt();
+                          });
+                          print(newValue);
+                        }),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(
@@ -104,17 +154,17 @@ class _InputPageState extends State<InputPage> {
                 ),
                 Expanded(
                   child: ReUsableCard(
-                    colorName: activeCardColor,
+                    colorName: kActiveCardColor,
                   ),
                 ),
               ],
             ),
           ),
           Container(
-            color: buttomContainerColor,
+            color: KButtomContainerColor,
             margin: EdgeInsets.only(top: 10.0),
             width: double.infinity,
-            height: bottomConstainerHeight,
+            height: kBottomConstainerHeight,
             child: Text(
               "Calculate BMI",
               textAlign: TextAlign.center,

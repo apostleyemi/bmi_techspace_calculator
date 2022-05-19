@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'card_content.dart';
-
-const labelTextStyle = TextStyle(
-  fontSize: 18.0,
-  color: Color(0xFF8D8E98),
-);
+import 'constants.dart';
 
 class ReUsableIconContent extends StatelessWidget {
   ReUsableIconContent({this.embededIcon, this.gender, this.onPress});
@@ -28,7 +24,7 @@ class ReUsableIconContent extends StatelessWidget {
           ),
           Text(
             gender!,
-            style: labelTextStyle,
+            style: kLabelTextStyle,
           )
         ],
       ),
